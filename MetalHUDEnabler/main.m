@@ -31,7 +31,7 @@ void enableMetalHUD(NSString *execPath) {
     }
     rename([execPath UTF8String], [newExecPath UTF8String]);
     FILE *file = fopen([execPath UTF8String], "w");
-    fprintf(file, "#!/bin/sh\nMTL_HUD_ENABLED=1 %s\n", [newExecPath UTF8String]);
+    fprintf(file, "#!/bin/sh\nMTL_HUD_ENABLED=1 \"%s\"\n", [newExecPath UTF8String]);
     char* mode = "0755";
     int octalMode = (int)strtol(mode, 0, 8);
     chmod([execPath UTF8String], octalMode);
