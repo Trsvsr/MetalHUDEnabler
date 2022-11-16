@@ -6,7 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <spawn.h>
 #import <sys/stat.h>
 
 struct stat st = {0};
