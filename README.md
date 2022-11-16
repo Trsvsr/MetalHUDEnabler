@@ -15,7 +15,8 @@ For example:  ``./MetalHUDEnabler /Applications/CrossOver.app enable`` would ena
 
 Sorta. This is a hacky way of achieving this and I'm sure there is some better method out there.
 
-**May or may not work with App Store apps** (tried with Resident Evil Village, didn't seem to work for me. YMMV.)
+**May or may not work with App Store apps** (tried with Resident Evil Village, app wouldn't open. YMMV. If you are going to try, you may need run with ``sudo``.)
+
 
 **If any of the apps you're using with MetalHUDEnabler need to be updated, make sure you use MetalHUDEnabler to disable the performance HUD first before you actually update them.**
 
