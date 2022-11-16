@@ -9,7 +9,7 @@ MetalHUDEnabler allows for permanently enabling the new Metal 3 performance HUD 
 
 Using MetalHUDEnabler is as simple as executing ``./MetalHUDEnabler [path to application] [enable/disable]`` then launching the target app normally from the dock or wherever else.
 
-For example:  ``./MetalHUDEnabler /Applications/CrossOver.app enable`` would enable the Metal 3 performance HUD for any games launched by the CrossOver application.
+For example:  ``./MetalHUDEnabler /Applications/CrossOver.app enable`` would enable the Metal 3 performance HUD for the CrossOver applications (and most games launched from it as a result).
 
 # Anything else?
 
