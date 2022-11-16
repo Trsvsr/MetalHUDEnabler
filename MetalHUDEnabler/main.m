@@ -46,6 +46,10 @@ void disableMetalHUD(NSString *execPath) {
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+        if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")) {
+            printf("Usage: MetalHUDEnabler [path to application] [enable/disable]\n");
+            return 0;
+        }
         if (argc > 3) {
             printf("Too many arguments\n");
             return 1;
@@ -53,10 +57,6 @@ int main(int argc, const char * argv[]) {
         else if (argc < 3) {
             printf("Too few arguments\n");
             return 1;
-        }
-        if (!strcmp(argv[1], "-h") || (!strcmp(argv[1], "--help"))) {
-            printf("Usage: MetalHUDEnabler [path to application] [enable/disable]\n");
-            return 0;
         }
         NSString *execPath = getExecutablePath(argv[1]);
         if (!strcmp(argv[2], "enable")) {
