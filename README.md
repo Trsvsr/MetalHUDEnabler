@@ -14,14 +14,6 @@ Using MetalHUDEnabler is as simple as executing ``./MetalHUDEnabler [path to app
 ``./MetalHUDEnabler /Applications/CrossOver.app disable`` would revert the changes made to the CrossOver application and disable the Metal HUD.
 
 # Anything else?
+This should work with any Metal-enabled application as of the latest code changes. Please let me know of any issues.
 
-Sorta. This is a hacky way of achieving this and I'm sure there is some better method out there.
-
-**May or may not work with App Store apps** (tried with Resident Evil Village, app wouldn't open. YMMV.) 
-
-If you are going to try this with an App Store app, you may need to run with ``sudo``.
-
-
-**If any of the apps you're using with MetalHUDEnabler need to be updated, make sure you use MetalHUDEnabler to disable the performance HUD first before you actually update them.**
-
-I am not responsible for any damages.
+That being said, I am not responsible for any damages and you are running this application at your own risk (although I don't see much of a possibility for things to go wrong here). Have fun.
