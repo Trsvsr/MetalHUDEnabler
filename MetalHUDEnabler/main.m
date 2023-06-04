@@ -44,6 +44,48 @@ void disableMetalHUD(NSString *bundleIdentifier) {
     printf("Metal HUD should be disabled for %s\n", [bundleIdentifier UTF8String]);
 }
 
+void cxMethod(const char *flag) {
+    // set NSString path to ~/Library/Application Support/CrossOver/Bottles/
+    NSString *bottlesPath = [NSHomeDirectory() stringByAppendingString:@"/Library/Application Support/CrossOver/Bottles/"];
+    // NSArray of bottles
+    NSArray *bottles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:bottlesPath error:nil];
+    if ([bottles count] == 0) {
+        printf("No bottles found, aborting.\n");
+        exit(1);
+    }
+    // print a list of bottles for the user to choose from
+    for (int i = 0; i < [bottles count]; i++) {
+        printf("%d: %s\n", i, [[bottles objectAtIndex:i] UTF8String]);
+    }
+    // get user input
+    printf("Enter the number of the bottle you want to enable the Metal HUD for: ");
+    int bottleNumber;
+    scanf("%d", &bottleNumber);
+    NSString *cxbottlePath = [bottlesPath stringByAppendingString:[bottles objectAtIndex:bottleNumber]];
+    NSString *cxbottleConfPath = [cxbottlePath stringByAppendingString:@"/cxbottle.conf"];
+    NSString *cxbottleConfContents = [NSString stringWithContentsOfFile:cxbottleConfPath encoding:NSUTF8StringEncoding error:nil];
+    if (!strcmp(flag, "enable")) {
+        // add "MTL_HUD_ENABLED" = "1" to bottle's cxbottle.conf
+        if ([cxbottleConfContents containsString:@"\n\"MTL_HUD_ENABLED\" = \"1\""]) {
+            printf("Metal HUD is already enabled for the following CrossOver bottle: %s\n", [[bottles objectAtIndex:bottleNumber] UTF8String]);
+            return;
+        }
+        cxbottleConfContents = [cxbottleConfContents stringByAppendingString:@"\n\"MTL_HUD_ENABLED\" = \"1\""];
+        [cxbottleConfContents writeToFile:cxbottleConfPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+        printf("Metal HUD should be enabled for the following CrossOver bottle: %s\n", [[bottles objectAtIndex:bottleNumber] UTF8String]);
+    }
+    else if (!strcmp(flag, "disable")) {
+        // remove "MTL_HUD_ENABLED" = "1" from bottle's cxbottle.conf
+        if (![cxbottleConfContents containsString:@"\n\"MTL_HUD_ENABLED\" = \"1\""]) {
+            printf("Metal HUD is already disabled for the following CrossOver bottle: %s\n", [[bottles objectAtIndex:bottleNumber] UTF8String]);
+            return;
+        }
+        cxbottleConfContents = [cxbottleConfContents stringByReplacingOccurrencesOfString:@"\n\"MTL_HUD_ENABLED\" = \"1\"" withString:@""];
+        [cxbottleConfContents writeToFile:cxbottleConfPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+        printf("Metal HUD should be disabled for the following CrossOver bottle: %s\n", [[bottles objectAtIndex:bottleNumber] UTF8String]);
+    }
+}
+
 void printUsage() {
     printf("Usage: MetalHUDEnabler [path to application] [enable/disable]\n");
 }
@@ -66,10 +108,20 @@ int main(int argc, const char * argv[]) {
         }
         NSString *bundleIdentifier = getBundleIdentifier(argv[1]);
         if (!strcmp(argv[2], "enable")) {
-            enableMetalHUD(bundleIdentifier);
+            if ([bundleIdentifier isEqualToString:@"com.codeweavers.CrossOver"]) {
+                cxMethod("enable");
+            }
+            else {
+                enableMetalHUD(bundleIdentifier);
+            }
         }
         else if (!strcmp(argv[2], "disable")) {
-            disableMetalHUD(bundleIdentifier);
+            if ([bundleIdentifier isEqualToString:@"com.codeweavers.CrossOver"]) {
+                cxMethod("disable");
+            }
+            else {
+                disableMetalHUD(bundleIdentifier);
+            }
         }
         else {
             printf("Unknown argument\n");
