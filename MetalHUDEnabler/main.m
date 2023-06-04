@@ -58,7 +58,7 @@ void cxMethod(const char *flag) {
         printf("%d: %s\n", i, [[bottles objectAtIndex:i] UTF8String]);
     }
     // get user input
-    printf("Enter the number of the bottle you want to enable the Metal HUD for: ");
+    printf("Select the number of the CrossOver bottle: ");
     int bottleNumber;
     scanf("%d", &bottleNumber);
     NSString *cxbottlePath = [bottlesPath stringByAppendingString:[bottles objectAtIndex:bottleNumber]];
