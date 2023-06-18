@@ -25,7 +25,7 @@ NSString *getBundleIdentifier(const char *applicationPath) {
 }
 
 void enableMetalHUD(NSString *bundleIdentifier) {
-    NSString *defaultsCommand = [NSString stringWithFormat:@"defaults write %@ MetalForceHudEnabled -bool true", bundleIdentifier];
+    NSString *defaultsCommand = [NSString stringWithFormat:@"defaults write \"%@\" MetalForceHudEnabled -bool true", bundleIdentifier];
     pid_t pid;
     int status;
     const char *args[] = {"sh", "-c", [defaultsCommand UTF8String], NULL};
@@ -35,7 +35,7 @@ void enableMetalHUD(NSString *bundleIdentifier) {
 }
 
 void disableMetalHUD(NSString *bundleIdentifier) {
-    NSString *defaultsCommand = [NSString stringWithFormat:@"defaults delete %@ MetalForceHudEnabled", bundleIdentifier];
+    NSString *defaultsCommand = [NSString stringWithFormat:@"defaults delete \"%@\" MetalForceHudEnabled", bundleIdentifier];
     pid_t pid;
     int status;
     const char *args[] = {"sh", "-c", [defaultsCommand UTF8String], NULL};
