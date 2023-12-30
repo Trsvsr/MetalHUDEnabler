@@ -45,8 +45,24 @@ void disableMetalHUD(NSString *bundleIdentifier) {
 }
 
 void cxMethod(const char *flag) {
-    // set NSString path to ~/Library/Application Support/CrossOver/Bottles/
-    NSString *bottlesPath = [NSHomeDirectory() stringByAppendingString:@"/Library/Application Support/CrossOver/Bottles/"];
+    NSString *bottlesPath = nil;
+    // check if ~/CXPBottles/ exists
+    if (!stat([[NSHomeDirectory() stringByAppendingString:@"/CXPBottles/"] UTF8String], &st)) {
+        // ask if user wants to use ~/CXPBottles/
+        printf("CXPatcher bottles directory found, use it? (yY/nN): ");
+        char answer;
+        scanf("%c", &answer);
+        if (answer == 'n' || answer == 'N') {
+            bottlesPath = [NSHomeDirectory() stringByAppendingString:@"/Library/Application Support/CrossOver/Bottles/"];
+        }
+        else if (answer == 'y' || answer == 'Y') {
+            bottlesPath = [NSHomeDirectory() stringByAppendingString:@"/CXPBottles/"];
+        }
+        else {
+            printf("Invalid answer, aborting.\n");
+            exit(1);
+        }
+    }
     // NSArray of bottles
     NSArray *bottles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:bottlesPath error:nil];
     if ([bottles count] == 0) {
