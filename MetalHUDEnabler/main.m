@@ -63,6 +63,9 @@ void cxMethod(const char *flag) {
             exit(1);
         }
     }
+    else {
+        bottlesPath = [NSHomeDirectory() stringByAppendingString:@"/Library/Application Support/CrossOver/Bottles/"];
+    }
     // NSArray of bottles
     NSArray *bottles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:bottlesPath error:nil];
     if ([bottles count] == 0) {
